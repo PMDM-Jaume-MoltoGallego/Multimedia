@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:multimedia_app/screens/video_screen.dart';
 
 import 'animation_screen.dart';
 
@@ -19,6 +20,15 @@ class HomeScreen extends StatelessWidget {
                 );
               },
               child: Text("Animation"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => VideoScreen()),
+                );
+              },
+              child: Text("Video"),
             ),
           ],
         ),
