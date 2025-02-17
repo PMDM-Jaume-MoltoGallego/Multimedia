@@ -12,10 +12,12 @@ class _VideoScreenState extends State<VideoScreen> {
   @override
   void initState() {
     super.initState();
+
     _controller = VideoPlayerController.asset('assets/video.mp4')
       ..initialize().then((_) {
         setState(() {});
       });
+    _controller.setVolume(0.5);
   }
 
   @override
@@ -24,22 +26,29 @@ class _VideoScreenState extends State<VideoScreen> {
     super.dispose();
   }
 
+  void skipTime(int seconds) {
+    final newPosition = _controller.value.position + Duration(seconds: seconds);
+    _controller.seekTo(newPosition);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Video Player'),
+      appBar: AppBar(
+        title: Text('Video Player'),
         centerTitle: true,
-        backgroundColor: Colors.blueAccent,),
+        backgroundColor: Colors.blueAccent,
+      ),
       body: Center(
         child: _controller.value.isInitialized
             ? Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: MediaQuery.of(context).size.width, // Ancho de la pantalla
-              height: MediaQuery.of(context).size.height * 0.4, // 40% de la altura
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.4,
               child: FittedBox(
-                fit: BoxFit.cover, // Ajusta el video al contenedor eliminando franjas
+                fit: BoxFit.cover,
                 child: SizedBox(
                   width: _controller.value.size.width,
                   height: _controller.value.size.height,
@@ -47,17 +56,36 @@ class _VideoScreenState extends State<VideoScreen> {
                 ),
               ),
             ),
-            IconButton(
-              iconSize: 80,
-              icon: Icon(
-                _controller.value.isPlaying ? Icons.pause_circle : Icons.play_circle_fill,
-              ),
-              onPressed: () {
-                setState(() {
-                  _controller.value.isPlaying ? _controller.pause() : _controller.play();
-                  _controller.setLooping(true);
-                });
-              },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  iconSize: 50,
+                  icon: Icon(Icons.replay_5),
+                  onPressed: () => skipTime(-5),
+                ),
+                IconButton(
+                  iconSize: 80,
+                  icon: Icon(
+                    _controller.value.isPlaying
+                        ? Icons.pause_circle
+                        : Icons.play_circle_fill,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _controller.value.isPlaying
+                          ? _controller.pause()
+                          : _controller.play();
+                      _controller.setLooping(true);
+                    });
+                  },
+                ),
+                IconButton(
+                  iconSize: 50,
+                  icon: Icon(Icons.forward_5),
+                  onPressed: () => skipTime(5),
+                ),
+              ],
             ),
           ],
         )
