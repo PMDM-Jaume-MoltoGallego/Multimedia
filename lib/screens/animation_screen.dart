@@ -17,8 +17,8 @@ class _AnimationScreenState extends State<AnimationScreen> {
   void _animateBox() {
     setState(() {
       _size = _random.nextDouble() * 150 + 50;
-      _top = _random.nextDouble() * 400;
-      _left = _random.nextDouble() * 300;
+      _top = _random.nextDouble() * 300;
+      _left = _random.nextDouble() * 200;
       _color = Color.fromRGBO(
         _random.nextInt(256),
         _random.nextInt(256),
@@ -32,7 +32,7 @@ class _AnimationScreenState extends State<AnimationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Nueva Animación')),
+      appBar: AppBar(title: Text('Animation')),
       body: Stack(
         children: [
           AnimatedPositioned(
