@@ -32,7 +32,9 @@ class _AnimationScreenState extends State<AnimationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Animation')),
+      appBar: AppBar(title: Text('Animation'),
+        centerTitle: true,
+        backgroundColor: Colors.blueAccent,),
       body: Stack(
         children: [
           AnimatedPositioned(

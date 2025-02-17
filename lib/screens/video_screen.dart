@@ -14,7 +14,7 @@ class _VideoScreenState extends State<VideoScreen> {
     super.initState();
     _controller = VideoPlayerController.asset('assets/video.mp4')
       ..initialize().then((_) {
-        setState(() {}); // Redibujar para mostrar el video una vez cargado
+        setState(() {});
       });
   }
 
@@ -27,7 +27,9 @@ class _VideoScreenState extends State<VideoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Video Player')),
+      appBar: AppBar(title: Text('Video Player'),
+        centerTitle: true,
+        backgroundColor: Colors.blueAccent,),
       body: Center(
         child: _controller.value.isInitialized
             ? Column(
@@ -53,6 +55,7 @@ class _VideoScreenState extends State<VideoScreen> {
               onPressed: () {
                 setState(() {
                   _controller.value.isPlaying ? _controller.pause() : _controller.play();
+                  _controller.setLooping(true);
                 });
               },
             ),
